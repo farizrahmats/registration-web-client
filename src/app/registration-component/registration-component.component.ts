@@ -108,17 +108,21 @@ export class RegistrationComponentComponent implements OnInit {
 		}, err => {
       this.showLogin = false;
       this.typeForm = false;
-
+      console.log(err);
       const controls = this.resgistForm.controls;
-      if(typeof err.error.errors.contact_no !== undefined){
-        controls['contactNo'].setErrors({'incorrect': true, 'exist': true});
-      }
 
-      if(typeof err.error.errors.email !== undefined){
-        controls['email'].setErrors({'incorrect': true, 'exist': true});
-        
+      if(err.status === 500){
+        alert("No connection to Database");
+      }else if(err.status === 422){
+        if(typeof err.error.errors.contact_no !== undefined){
+          controls['contactNo'].setErrors({'incorrect': true, 'exist': true});
+        }
+  
+        if(typeof err.error.errors.email !== undefined){
+          controls['email'].setErrors({'incorrect': true, 'exist': true});
+        }
       }
-
+      
       this.hasFormErrors = true;
 			return;
 		});
