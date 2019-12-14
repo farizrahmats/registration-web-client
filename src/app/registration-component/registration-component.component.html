@@ -1,0 +1,77 @@
+<mat-toolbar>
+  <span>Registration</span>
+</mat-toolbar>
+<mat-card class="my-card">
+   <mat-card-content>
+      <form class="my-form" [formGroup]="resgistForm" [ngClass]="typeForm ? 'inactive-form' : 'active-form'">  
+         <mat-form-field class="full-width">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput placeholder="Mobile Number" formControlName="contactNo" minlength="10" required [readonly]="typeForm">
+            <mat-error *ngFor="let validation of validationMessages.contactNo" >
+              <mat-error class="error-message" *ngIf="resgistForm.get('contactNo').hasError(validation.type) && (resgistForm.get('contactNo').dirty || resgistForm.get('contactNo').touched)" >
+                {{ validation.message}}
+              </mat-error>
+            </mat-error>
+         </mat-form-field>
+         <mat-form-field class="full-width">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="First name" formControlName="firstName" required [readonly]="typeForm">
+            <mat-error *ngFor="let validation of validationMessages.firstName" >
+              <mat-error class="error-message" *ngIf="resgistForm.get('firstName').hasError(validation.type) && (resgistForm.get('firstName').dirty || resgistForm.get('firstName').touched)" >
+                {{ validation.message}}
+              </mat-error>
+            </mat-error>
+         </mat-form-field>
+         <mat-form-field class="full-width">
+            <mat-label>Last Name</mat-label>
+            <input  matInput  placeholder="Last Name" formControlName="lastName" required [readonly]="typeForm">
+            <mat-error *ngFor="let validation of validationMessages.lastName" >
+              <mat-error class="error-message" *ngIf="resgistForm.get('lastName').hasError(validation.type) && (resgistForm.get('lastName').dirty || resgistForm.get('lastName').touched)" >
+                {{ validation.message}}
+              </mat-error>
+            </mat-error>
+         </mat-form-field>
+         <mat-form-field class="full-width">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" placeholder="Choose a date" [readonly]="typeForm" [max]="maxDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+         </mat-form-field>
+         <section class="example-section">
+            <label class="full-width">Gender:</label>
+            <br>
+            <br>
+            <mat-radio-group formControlName="gender">
+               <mat-radio-button class="example-margin" value="Male">Male</mat-radio-button> &nbsp;
+               <mat-radio-button class="example-margin" value="Female">Female</mat-radio-button>
+            </mat-radio-group>
+         </section>
+         <br>
+         <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" formControlName="email" required [readonly]="typeForm">
+          <mat-error *ngFor="let validation of validationMessages.email" >
+            <mat-error class="error-message" *ngIf="resgistForm.get('email').hasError(validation.type) && (resgistForm.get('email').dirty || resgistForm.get('email').touched)" >
+              {{ validation.message}}
+            </mat-error>
+          </mat-error>
+       </mat-form-field>
+       <mat-form-field class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'" formControlName="password" minlength="8" [readonly]="typeForm">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngFor="let validation of validationMessages.password" >
+            <mat-error class="error-message" *ngIf="resgistForm.get('password').hasError(validation.type) && (resgistForm.get('password').dirty || resgistForm.get('password').touched)" >
+              {{ validation.message}}
+            </mat-error>
+          </mat-error>
+       </mat-form-field>
+      </form>
+   </mat-card-content>
+   <mat-card-actions>
+      <button mat-raised-button (click)="onSubmit()" color="primary" [ngClass]="typeForm ? 'inactive-form' : 'active-form'" [disabled]="typeForm">REGISTER</button>
+      <a mat-raised-button routerLink="/login" color="primary" *ngIf="showLogin == true">LOGIN</a>
+   </mat-card-actions>
+</mat-card>
